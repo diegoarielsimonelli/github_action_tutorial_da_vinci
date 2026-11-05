@@ -21,6 +21,7 @@ jobs:
     
     env:
       PRODUCCION: "MAIN"
+      DATABASE_URL: ${{secrets.DATABASE_URL}}
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -38,3 +39,5 @@ jobs:
         run: |
           echo " Evento de repositorio ${{ github.repository }}"
           echo " Github ${{ github.actor }}"
+      - name: Secretos en mi repo
+        run: echo "${{ env.DATABASE_URL }}"
