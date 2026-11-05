@@ -41,3 +41,7 @@ jobs:
           echo " Github ${{ github.actor }}"
       - name: Secretos en mi repo
         run: echo "${{ env.DATABASE_URL }}"
+      - name: Usando una variable de repositorio
+        if: vars.DEPLOY == 'Render'
+        run: echo "${{ vars.DEPLOY }}"
+
