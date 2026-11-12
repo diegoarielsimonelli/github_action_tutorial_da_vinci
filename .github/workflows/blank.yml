@@ -27,6 +27,18 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v4
+      - name: Set up Python 3.14
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.14"
+
+      # Agregamos ruff y mypy aquí para que no fallen los comandos de abajo
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install ruff mypy
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+
 
       # Runs a single command using the runners shell
       - name: Mostrando una variable de entorno
@@ -44,4 +56,10 @@ jobs:
       - name: Usando una variable de repositorio
         if: vars.DEPLOY == 'Render'
         run: echo "${{ vars.DEPLOY }}"
+        
+      - name: Ejecutar ruff
+        run: ruff check carrito.py
+
+      - name: Ejecutar mypy
+        run: mypy --strict carrito.py
 
